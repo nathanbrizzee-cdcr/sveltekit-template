@@ -1,4 +1,7 @@
 {
 	"eslint.validate": ["javascript", "typescript", "svelte"],
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"editor.formatOnSave": true,
+	"workbench.editor.labelFormat": "short",
+	"explorer.compactFolders": false,
+	"workbench.tree.indent": 12
 }
