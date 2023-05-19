@@ -3,4 +3,4 @@
 
 npx svelte-kit sync
 npx lint-staged
-pnpm test
+npm test

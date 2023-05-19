@@ -23,7 +23,10 @@
 		"docker-down:test": "docker compose -f docker-compose.test.yml down",
 		"docker-up:dev": "shx mkdir -p docker-data/db && docker compose -f docker-compose.dev.yml up -d --wait --force-recreate",
 		"docker-down:dev": "docker compose -f docker-compose.dev.yml down",
-		"upgrade-packages": "npx npm-upgrade"
+		"upgrade-packages": "npx npm-upgrade",
+		"prisma:generate": "npx prisma generate",
+		"prisma:migrate": "npx prisma migrate dev --name",
+		"prisma:db:push": "npx prisma db push"
 	},
 	"prisma": {
 		"seed": "tsx ./prisma/seeds/index.ts"
@@ -89,7 +92,7 @@
 	},
 	"license": "MIT",
 	"engines": {
-		"npm": "Please use pnpm instead of npm",
+		"npm": ">= 7.0.0",
 		"yarn": "Please use pnpm instead of yarn.",
 		"pnpm": ">= 8.5.0"
 	},

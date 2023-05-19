@@ -29,17 +29,9 @@ type RootTranslation = {
 		 */
 		create: string
 		/**
-		 * U​p​d​a​t​e
-		 */
-		update: string
-		/**
 		 * L​o​g​o​u​t
 		 */
 		logOut: string
-		/**
-		 * L​o​g​i​n​ ​w​i​t​h​ ​Y​o​u​T​u​b​e
-		 */
-		loginYouTube: string
 	}
 	labels: {
 		/**
@@ -59,22 +51,6 @@ type RootTranslation = {
 		 * @param {unknown} 0
 		 */
 		views: RequiredParams<'0'>
-	}
-	enums: {
-		visibility: {
-			/**
-			 * P​u​b​l​i​c
-			 */
-			Public: string
-			/**
-			 * U​n​l​i​s​t​e​d
-			 */
-			Unlisted: string
-			/**
-			 * P​r​i​v​a​t​e
-			 */
-			Private: string
-		}
 	}
 	errors: {
 		/**
@@ -167,17 +143,9 @@ export type TranslationFunctions = {
 		 */
 		create: () => LocalizedString
 		/**
-		 * Update
-		 */
-		update: () => LocalizedString
-		/**
 		 * Logout
 		 */
 		logOut: () => LocalizedString
-		/**
-		 * Login with YouTube
-		 */
-		loginYouTube: () => LocalizedString
 	}
 	labels: {
 		/**
@@ -196,22 +164,6 @@ export type TranslationFunctions = {
 		 * {0} views
 		 */
 		views: (arg0: unknown) => LocalizedString
-	}
-	enums: {
-		visibility: {
-			/**
-			 * Public
-			 */
-			Public: () => LocalizedString
-			/**
-			 * Unlisted
-			 */
-			Unlisted: () => LocalizedString
-			/**
-			 * Private
-			 */
-			Private: () => LocalizedString
-		}
 	}
 	errors: {
 		/**

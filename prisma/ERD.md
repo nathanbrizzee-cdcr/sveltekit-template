@@ -10,9 +10,6 @@ erDiagram
 		value Unlisted
 		value Private
 	}
-	ListItemType {
-		value YouTubeChannel
-	}
 	User {
 		String id PK  "dbgenerated(gen_random_uuid())"
 		DateTime createdAt  "now()"
@@ -63,57 +60,11 @@ erDiagram
 		String token
 		DateTime expires
 	}
-	List {
-		String id PK  "dbgenerated(gen_random_uuid())"
-		String title
-		String description  "nullable"
-		Visibility visibility
-		String userId FK
-		DateTime createdAt  "now()"
-		DateTime updatedAt
-	}
-	ListItem {
-		Int id PK  "autoincrement()"
-		String name
-		String description  "nullable"
-		String listId FK
-		String listItemMetaId FK
-		DateTime createdAt  "now()"
-		DateTime updatedAt
-	}
-	ListItemMeta {
-		String id PK  "dbgenerated(gen_random_uuid())"
-		String name
-		String originId
-		String imageUrl
-		ListItemType type
-		DateTime createdAt  "now()"
-		DateTime updatedAt
-		String youTubeMetaOriginId FK  "nullable"
-	}
-	YouTubeMeta {
-		String originId
-		String name
-		String description
-		Int subscriberCount
-		String avatarUrl
-		String bannerUrl  "nullable"
-		String customUrl
-		Boolean isVerified
-		DateTime createdAt  "now()"
-		DateTime updatedAt
-	}
 	User }|--|{ UserSettings : settings
 	UserSettings }|--|{ User : user
 	UserSettings }o--|| Locale : locale
 	UserSettings }o--|| ColorScheme : "enum:colorScheme"
 	Account }o--|| User : user
 	Session }o--|| User : user
-	List }o--|| User : creator
-	List }o--|| Visibility : "enum:visibility"
-	ListItem }o--|| ListItemMeta : meta
-	ListItem }o--|| List : list
-	ListItemMeta }o--|| YouTubeMeta : youtubeMeta
-	ListItemMeta }o--|| ListItemType : "enum:type"
 
 ```

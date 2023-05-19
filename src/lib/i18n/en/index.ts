@@ -1,30 +1,16 @@
-import type { Visibility } from '@prisma/client';
 import type { BaseTranslation } from '../i18n-types';
-
-type VisibilityTranslation = {
-	[key in Visibility]: string;
-};
 
 const en: BaseTranslation = {
 	message: 'Hello World',
 	buttons: {
 		create: 'Create',
-		update: 'Update',
 		logOut: 'Logout',
-		loginYouTube: 'Login with YouTube',
 	},
 	labels: {
 		title: 'Title',
 		description: 'Description',
 		visibility: 'Visibility',
 		views: '{0} views',
-	},
-	enums: {
-		visibility: {
-			Public: 'Public',
-			Unlisted: 'Unlisted',
-			Private: 'Private',
-		} satisfies VisibilityTranslation,
 	},
 	errors: {
 		titleRequired: 'Title cannot be empty.',

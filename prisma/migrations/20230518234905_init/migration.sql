@@ -4,9 +4,6 @@ CREATE TYPE "ColorScheme" AS ENUM ('System', 'Dark', 'Light');
 -- CreateEnum
 CREATE TYPE "Visibility" AS ENUM ('Public', 'Unlisted', 'Private');
 
--- CreateEnum
-CREATE TYPE "ListItemType" AS ENUM ('YouTubeChannel');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -77,60 +74,6 @@ CREATE TABLE "VerificationToken" (
     "expires" TIMESTAMP(3) NOT NULL
 );
 
--- CreateTable
-CREATE TABLE "List" (
-    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "title" TEXT NOT NULL,
-    "description" TEXT,
-    "visibility" "Visibility" NOT NULL,
-    "userId" UUID NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "List_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ListItem" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "description" TEXT,
-    "listId" UUID NOT NULL,
-    "listItemMetaId" UUID NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "ListItem_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ListItemMeta" (
-    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "name" TEXT NOT NULL,
-    "originId" TEXT NOT NULL,
-    "imageUrl" TEXT NOT NULL,
-    "type" "ListItemType" NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "youTubeMetaOriginId" TEXT,
-
-    CONSTRAINT "ListItemMeta_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "YouTubeMeta" (
-    "originId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "subscriberCount" INTEGER NOT NULL,
-    "avatarUrl" TEXT NOT NULL,
-    "bannerUrl" TEXT,
-    "customUrl" TEXT NOT NULL,
-    "isVerified" BOOLEAN NOT NULL DEFAULT false,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -152,12 +95,6 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
--- CreateIndex
-CREATE UNIQUE INDEX "ListItemMeta_originId_type_key" ON "ListItemMeta"("originId", "type");
-
--- CreateIndex
-CREATE UNIQUE INDEX "YouTubeMeta_originId_key" ON "YouTubeMeta"("originId");
-
 -- AddForeignKey
 ALTER TABLE "UserSettings" ADD CONSTRAINT "UserSettings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -169,15 +106,3 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "List" ADD CONSTRAINT "List_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ListItem" ADD CONSTRAINT "ListItem_listItemMetaId_fkey" FOREIGN KEY ("listItemMetaId") REFERENCES "ListItemMeta"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ListItem" ADD CONSTRAINT "ListItem_listId_fkey" FOREIGN KEY ("listId") REFERENCES "List"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ListItemMeta" ADD CONSTRAINT "ListItemMeta_youTubeMetaOriginId_fkey" FOREIGN KEY ("youTubeMetaOriginId") REFERENCES "YouTubeMeta"("originId") ON DELETE SET NULL ON UPDATE CASCADE;

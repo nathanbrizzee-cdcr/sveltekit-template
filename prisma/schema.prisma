@@ -22,7 +22,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  lists         List[]
   settings      UserSettings?
 }
 
@@ -31,7 +30,6 @@ enum ColorScheme {
   Dark
   Light
 }
-
 model UserSettings {
   id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   onboarded   Boolean     @default(false)
@@ -93,59 +91,3 @@ enum Visibility {
   Private
 }
 
-model List {
-  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title       String
-  description String?
-  visibility  Visibility
-  creator     User       @relation(fields: [userId], references: [id])
-  userId      String     @db.Uuid
-  items       ListItem[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-}
-
-enum ListItemType {
-  YouTubeChannel
-}
-
-model ListItem {
-  id             Int          @id @default(autoincrement())
-  name           String
-  description    String?
-  meta           ListItemMeta @relation(fields: [listItemMetaId], references: [id])
-  list           List         @relation(fields: [listId], references: [id])
-  listId         String       @db.Uuid
-  listItemMetaId String       @db.Uuid
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-}
-
-model ListItemMeta {
-  id                  String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                String
-  originId            String
-  imageUrl            String
-  type                ListItemType
-  youtubeMeta         YouTubeMeta? @relation(fields: [youTubeMetaOriginId], references: [originId])
-  listItem            ListItem[]
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
-  youTubeMetaOriginId String?
-
-  @@unique([originId, type])
-}
-
-model YouTubeMeta {
-  originId        String         @unique
-  name            String
-  description     String
-  subscriberCount Int
-  avatarUrl       String
-  bannerUrl       String?
-  customUrl       String
-  isVerified      Boolean        @default(false)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  ListItemMeta    ListItemMeta[]
-}
