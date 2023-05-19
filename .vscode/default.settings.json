@@ -3,5 +3,6 @@
 	"editor.formatOnSave": true,
 	"workbench.editor.labelFormat": "short",
 	"explorer.compactFolders": false,
-	"workbench.tree.indent": 12
+	"workbench.tree.indent": 12,
+	"git.mergeEditor": true
 }
