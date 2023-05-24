@@ -29,4 +29,10 @@
 			{$LL.buttons.logOut()}
 		{/if}
 	</button>
+{:else}
+	<button class="hover:variant-soft-primary btn">
+		<a href="/"
+			><span class="w-6 text-center"><iconify-icon icon="fa:sign-in" /></span>
+			<span>{$LL.buttons.logIn()}</span></a>
+	</button>
 {/if}

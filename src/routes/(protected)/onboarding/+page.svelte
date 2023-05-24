@@ -22,7 +22,7 @@
 		</label>
 		<p class="pt-4">{$LL.pages.onboarding.messages.final()}</p>
 		<div class="my-4 flex justify-end">
-			<button class="btn variant-filled-success">Lets Go!</button>
+			<button class="variant-filled-success btn">Lets Go!</button>
 		</div>
 	</form>
 </div>

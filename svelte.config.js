@@ -13,7 +13,9 @@ const config = {
 			postcss: true,
 		}),
 	],
-
+	vitePlugin: {
+		inspector: true,
+	},
 	kit: {
 		// eslint-disable-next-line no-extra-boolean-cast
 		adapter: !!process.env.NODE_BUILD ? nodeAdapter() : adapter(),

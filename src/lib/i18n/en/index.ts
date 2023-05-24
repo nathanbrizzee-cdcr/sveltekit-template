@@ -2,9 +2,19 @@ import type { BaseTranslation } from '../i18n-types';
 
 const en: BaseTranslation = {
 	message: 'Hello World',
+	seo: {
+		title: 'My App',
+		description: 'A very good app',
+	},
+	navigation: {
+		title: 'Navigation',
+		homepage: 'Homepage',
+		about: 'About',
+	},
 	buttons: {
 		create: 'Create',
 		logOut: 'Logout',
+		logIn: 'Sign in',
 	},
 	labels: {
 		title: 'Title',

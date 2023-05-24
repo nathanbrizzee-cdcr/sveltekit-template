@@ -5,13 +5,11 @@
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { seo } from '$lib/stores/SeoStore';
 
-	// export let data;
-
 	let loading = false;
 
 	seo.set({
-		title: 'listd',
-		description: 'listd',
+		title: $LL.seo.title(),
+		description: $LL.seo.description(),
 	});
 </script>
 

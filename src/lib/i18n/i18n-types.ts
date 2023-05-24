@@ -23,6 +23,30 @@ type RootTranslation = {
 	 * H​e​l​l​o​ ​W​o​r​l​d
 	 */
 	message: string
+	seo: {
+		/**
+		 * M​y​ ​A​p​p
+		 */
+		title: string
+		/**
+		 * A​ ​v​e​r​y​ ​g​o​o​d​ ​a​p​p
+		 */
+		description: string
+	}
+	navigation: {
+		/**
+		 * N​a​v​i​g​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * H​o​m​e​p​a​g​e
+		 */
+		homepage: string
+		/**
+		 * A​b​o​u​t
+		 */
+		about: string
+	}
 	buttons: {
 		/**
 		 * C​r​e​a​t​e
@@ -32,6 +56,10 @@ type RootTranslation = {
 		 * L​o​g​o​u​t
 		 */
 		logOut: string
+		/**
+		 * S​i​g​n​ ​i​n
+		 */
+		logIn: string
 	}
 	labels: {
 		/**
@@ -137,6 +165,30 @@ export type TranslationFunctions = {
 	 * Hello World
 	 */
 	message: () => LocalizedString
+	seo: {
+		/**
+		 * My App
+		 */
+		title: () => LocalizedString
+		/**
+		 * A very good app
+		 */
+		description: () => LocalizedString
+	}
+	navigation: {
+		/**
+		 * Navigation
+		 */
+		title: () => LocalizedString
+		/**
+		 * Homepage
+		 */
+		homepage: () => LocalizedString
+		/**
+		 * About
+		 */
+		about: () => LocalizedString
+	}
 	buttons: {
 		/**
 		 * Create
@@ -146,6 +198,10 @@ export type TranslationFunctions = {
 		 * Logout
 		 */
 		logOut: () => LocalizedString
+		/**
+		 * Sign in
+		 */
+		logIn: () => LocalizedString
 	}
 	labels: {
 		/**

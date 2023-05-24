@@ -15,6 +15,7 @@ const config = {
 
 	plugins: [
 		require('@tailwindcss/forms'),
+		require('@tailwindcss/typography'),
 		// TODO: remove this ignore
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
