@@ -12,3 +12,4 @@ vite.config.ts.timestamp-*
 /docker-data
 settings.json
 auth.json
+db-config/init-database.sql
