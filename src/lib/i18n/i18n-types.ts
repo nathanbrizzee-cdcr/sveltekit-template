@@ -118,6 +118,12 @@ type RootTranslation = {
 			}
 		}
 		onboarding: {
+			buttons: {
+				/**
+				 * L​e​t​s​ ​G​o​!
+				 */
+				letsGo: string
+			}
 			labels: {
 				/**
 				 * U​s​e​r​n​a​m​e
@@ -259,6 +265,12 @@ export type TranslationFunctions = {
 			}
 		}
 		onboarding: {
+			buttons: {
+				/**
+				 * Lets Go!
+				 */
+				letsGo: () => LocalizedString
+			}
 			labels: {
 				/**
 				 * Username

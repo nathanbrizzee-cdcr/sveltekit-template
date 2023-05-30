@@ -1,19 +1,29 @@
-version: '3.7'
+version: '3.9'
 
 services:
-  db:
+  db-dev:
     extends:
       file: docker-compose.base.yml
       service: db
+    ports:
+      - ${DB_PORT}:5432
     volumes:
       - ./docker-data/db:/bitnami/postgresql
-  redis:
+  redis-dev:
     extends:
       file: docker-compose.base.yml
       service: redis
+    ports:
+      - ${REDIS_PORT}:6379
     volumes:
       - ./docker-data/redis:/bitnami/redis/data
-  keycloak:
+  keycloak-dev:
     extends:
       file: docker-compose.base.yml
       service: keycloak
+    depends_on:
+      db-dev:
+        condition: service_healthy
+        restart: true
+    ports:
+      - ${KEYCLOAK_HOST_PORT}:8080

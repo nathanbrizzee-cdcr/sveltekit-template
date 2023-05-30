@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.9'
 
 services:
   db:
@@ -9,8 +9,6 @@ services:
       POSTGRESQL_PASSWORD: ${POSTGRESQL_ADMIN_PASSWORD}
     volumes:
       - ./db-config:/docker-entrypoint-initdb.d
-    ports:
-      - ${DB_PORT}:5432
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres']
       start_period: 5s
@@ -21,10 +19,8 @@ services:
     image: bitnami/redis:7.0.11
     restart: always
     hostname: redis
-    ports:
-      - ${REDIS_PORT}:6379
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      ALLOW_EMPTY_PASSWORD: 'yes'
       # - REDIS_PASSWORD=password123
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
@@ -35,10 +31,6 @@ services:
     image: bitnami/keycloak:21.1.1
     restart: always
     hostname: keycloak
-    depends_on:
-      db:
-        condition: service_healthy
-        restart: true
     healthcheck:
       # Keycloak takes time to connect to the database and set itself up
       test: ['CMD-SHELL', 'exit 0']
@@ -58,7 +50,5 @@ services:
       KEYCLOAK_DATABASE_PASSWORD: ${KEYCLOAK_DATABASE_PASSWORD}
       KEYCLOAK_DATABASE_SCHEMA: ${KEYCLOAK_DATABASE_SCHEMA}
       KEYCLOAK_DATABASE_NAME: ${KEYCLOAK_DATABASE_NAME}
-    ports:
-      - ${KEYCLOAK_HOST_PORT}:8080
     volumes:
       - ./keycloak/themes:/opt/bitnami/keycloak/themes/mynewtheme

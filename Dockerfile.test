@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/playwright:v1.34.3-jammy
+
+WORKDIR /app
+
+COPY package*.json /app/
+COPY ZscalerRoot.crt /usr/local/share/ca-certificates/ZscalerRoot.crt
+RUN update-ca-certificates
+
+RUN NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/ZscalerRoot.crt npm ci
+
+RUN NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/ZscalerRoot.crt npm install -g dotenv-cli
+
+COPY . .
+
+RUN rm -rf .env
+RUN rm -rf .env.*
+
+ENV NODE_BUILD=true
