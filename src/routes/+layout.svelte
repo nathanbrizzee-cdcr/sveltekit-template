@@ -8,9 +8,8 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import { setLocale } from '$lib/i18n/i18n-svelte.js';
+	import { setLocale, LL } from '$lib/i18n/i18n-svelte';
 	// import { page } from '$app/stores';
-	import { LL } from '$lib/i18n/i18n-svelte';
 	import { seo } from '$lib/stores/SeoStore';
 	import {
 		AppBar,

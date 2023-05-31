@@ -1,15 +1,25 @@
-version: '3.7'
+version: '3.9'
 
 services:
-  db:
+  db-test:
     extends:
       file: docker-compose.base.yml
       service: db
-  redis:
+    ports:
+      - ${DB_PORT}:5432
+  redis-test:
     extends:
       file: docker-compose.base.yml
       service: redis
-  keycloak:
+    ports:
+      - ${REDIS_PORT}:6379
+  keycloak-test:
     extends:
       file: docker-compose.base.yml
       service: keycloak
+    depends_on:
+      db-test:
+        condition: service_healthy
+        restart: true
+    ports:
+      - ${KEYCLOAK_HOST_PORT}:8080

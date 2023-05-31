@@ -12,4 +12,6 @@ vite.config.ts.timestamp-*
 /docker-data
 settings.json
 auth.json
+.nyc_output
+coverage
 db-config/init-database.sql
