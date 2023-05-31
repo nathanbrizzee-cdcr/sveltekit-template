@@ -20,6 +20,9 @@ if (process.env.NODE_ENV?.toLowerCase() === 'test') {
 
 const config: UserConfig = {
 	plugins,
+	build: {
+		sourcemap: true,
+	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}'],
 	},

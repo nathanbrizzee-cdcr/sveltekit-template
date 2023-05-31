@@ -12,8 +12,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest run",
-		"test:e2e": "npm run docker-down:dev && npm run docker-down:test && npm run docker-up:test && npm run migrate:init && cross-env NODE_ENV=test prisma db seed && npx playwright install && playwright test && npm run docker-down:test",
-		"test:e2e:debug": "npm run docker-down:dev && npm run docker-down:test && npm run docker-up:test && npm run migrate:init && cross-env NODE_ENV=test prisma db seed && npx playwright install && playwright test --debug && npm run docker-down:test",
+		"test:e2e": "npm run docker-down:dev && npm run docker-down:test && npm run docker-up:test && npm run migrate:init && cross-env NODE_ENV=test prisma db seed && npx playwright install && cross-env NODE_ENV=test playwright test && npm run docker-down:test",
+		"test:e2e:debug": "npm run docker-down:dev && npm run docker-down:test && npm run docker-up:test && npm run migrate:init && cross-env NODE_ENV=test prisma db seed && npx playwright install && cross-env NODE_ENV=test playwright test --debug && npm run docker-down:test",
 		"lint": "eslint --ext .js,.cjs,.ts,.svelte .",
 		"typecheck": "npm run check",
 		"format": "prettier --plugin-search-dir . --check .",
@@ -32,7 +32,8 @@
 		"prisma:migrate": "npx prisma migrate dev --name",
 		"prisma:db:push": "npx prisma db push",
 		"prisma:studio": "npx prisma studio",
-		"upgrade-packages": "npx npm-upgrade"
+		"upgrade-packages": "npx npm-upgrade",
+		"coverage:report": "shx rm -rf coverage && shx rm -rf .nyc_output && npm run test:e2e && npx nyc report && npx http-server ./coverage -p 8090 -o"
 	},
 	"prisma": {
 		"seed": "tsx ./prisma/seeds/index.ts"
@@ -68,12 +69,14 @@
 		"eslint-plugin-import-no-duplicates-prefix-resolved-path": "^2.0.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-svelte": "^2.29.0",
+		"http-server": "^14.1.1",
 		"husky": "^8.0.3",
 		"iconify-icon": "^1.0.7",
 		"lint-staged": "^13.2.2",
 		"luxon": "^3.3.0",
 		"next-auth": "^4.22.1",
 		"npm-upgrade": "^3.1.0",
+		"nyc": "^15.1.0",
 		"postcss": "^8.4.24",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.8",
