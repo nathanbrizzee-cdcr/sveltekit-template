@@ -25,11 +25,11 @@ type RootTranslation = {
 	message: string
 	seo: {
 		/**
-		 * M​y​ ​A​p​p
+		 * C​D​C​R​ ​L​a​y​o​u​t
 		 */
 		title: string
 		/**
-		 * A​ ​v​e​r​y​ ​g​o​o​d​ ​a​p​p
+		 * S​t​a​r​t​e​r​ ​t​e​m​p​l​a​t​e​ ​f​o​r​ ​C​D​C​R​ ​S​v​e​l​t​e​k​i​t​ ​d​e​v​e​l​o​p​m​e​n​t​.
 		 */
 		description: string
 	}
@@ -102,6 +102,28 @@ type RootTranslation = {
 	}
 	pages: {
 		root: {
+			login: {
+				/**
+				 * T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
+				 */
+				headline: string
+				/**
+				 * T​h​i​s​ ​i​s​ ​a​n​ ​o​f​f​i​c​i​a​l​ ​S​t​a​t​e​ ​o​f​ ​C​a​l​i​f​o​r​n​i​a​ ​S​y​s​t​e​m​ ​f​o​r​ ​a​u​t​h​o​r​i​z​e​d​ ​a​n​d​ ​a​p​p​r​o​v​e​d​ ​l​a​w​ ​e​n​f​o​r​c​e​m​e​n​t​ ​u​s​e​ ​o​n​l​y​.​ ​A​c​c​e​s​s​ ​t​o​ ​o​r​ ​u​s​e​ ​o​f​ ​t​h​i​s​ ​s​y​s​t​e​m​ ​b​y​ ​n​o​n​-​a​u​t​h​o​r​i​z​e​d​ ​u​s​e​r​ ​i​s​ ​a​ ​v​i​o​l​a​t​i​o​n​ ​o​f​ ​b​o​t​h​ ​S​t​a​t​e​ ​o​f​ ​C​a​l​i​f​o​r​n​i​a​ ​a​n​d​ ​F​e​d​e​r​a​l​ ​l​a​w​.​ ​U​n​a​u​t​h​o​r​i​z​e​d​ ​a​c​c​e​s​s​ ​w​i​l​l​ ​b​e​ ​p​r​o​s​e​c​u​t​e​d​ ​t​o​ ​t​h​e​ ​f​u​l​l​ ​e​x​t​e​n​t​ ​o​f​ ​t​h​e​ ​l​a​w​.
+				 */
+				body: string
+				/**
+				 * I​ ​a​g​r​e​e​ ​t​o​ ​t​h​e​s​e​ ​T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s​.
+				 */
+				acknowledgement: string
+				/**
+				 * M​u​s​t​ ​a​c​c​e​p​t​ ​T​e​r​m​s​ ​a​n​d​ ​C​o​n​d​i​t​i​o​n​s
+				 */
+				disabledBtn: string
+				/**
+				 * L​o​g​i​n​ ​t​o​ 
+				 */
+				loginBtn: string
+			}
 			loggedIn: {
 				messages: {
 					/**
@@ -173,11 +195,11 @@ export type TranslationFunctions = {
 	message: () => LocalizedString
 	seo: {
 		/**
-		 * My App
+		 * CDCR Layout
 		 */
 		title: () => LocalizedString
 		/**
-		 * A very good app
+		 * Starter template for CDCR Sveltekit development.
 		 */
 		description: () => LocalizedString
 	}
@@ -249,6 +271,28 @@ export type TranslationFunctions = {
 	}
 	pages: {
 		root: {
+			login: {
+				/**
+				 * Terms and Conditions
+				 */
+				headline: () => LocalizedString
+				/**
+				 * This is an official State of California System for authorized and approved law enforcement use only. Access to or use of this system by non-authorized user is a violation of both State of California and Federal law. Unauthorized access will be prosecuted to the full extent of the law.
+				 */
+				body: () => LocalizedString
+				/**
+				 * I agree to these Terms and Conditions.
+				 */
+				acknowledgement: () => LocalizedString
+				/**
+				 * Must accept Terms and Conditions
+				 */
+				disabledBtn: () => LocalizedString
+				/**
+				 * Login to 
+				 */
+				loginBtn: () => LocalizedString
+			}
 			loggedIn: {
 				messages: {
 					/**

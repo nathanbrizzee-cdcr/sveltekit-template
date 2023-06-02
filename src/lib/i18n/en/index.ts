@@ -3,8 +3,8 @@ import type { BaseTranslation } from '../i18n-types';
 const en: BaseTranslation = {
 	message: 'Hello World',
 	seo: {
-		title: 'My App',
-		description: 'A very good app',
+		title: 'CDCR Layout',
+		description: 'Starter template for CDCR Sveltekit development.',
 	},
 	navigation: {
 		title: 'Navigation',
@@ -32,6 +32,13 @@ const en: BaseTranslation = {
 	},
 	pages: {
 		root: {
+			login: {
+				headline: 'Terms and Conditions',
+				body: 'This is an official State of California System for authorized and approved law enforcement use only. Access to or use of this system by non-authorized user is a violation of both State of California and Federal law. Unauthorized access will be prosecuted to the full extent of the law.',
+				acknowledgement: 'I agree to these Terms and Conditions.',
+				disabledBtn: 'Must accept Terms and Conditions',
+				loginBtn: 'Login to ', // will render with siteTitle.
+			},
 			loggedIn: {
 				messages: {
 					createList: 'Click Create to get started.',
