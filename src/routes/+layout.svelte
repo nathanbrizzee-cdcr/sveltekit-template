@@ -7,6 +7,8 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import '@fortawesome/fontawesome-free/js/all.js';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	import { signOut, signIn } from '@auth/sveltekit/client';
 
 	/// Structure
 	// import Header from '$lib/Layout/Header.svelte';
@@ -31,6 +33,7 @@
 	import { setLocale, LL } from '$lib/i18n/i18n-svelte';
 	// import { page } from '$app/stores';
 	import { seo } from '$lib/stores/SeoStore';
+	import { page } from '$app/stores';
 	import Seo from './SEO.svelte';
 
 	//
@@ -89,7 +92,17 @@
 		placement: 'bottom',
 	};
 
-	export const loggedIn = 'false';
+	let loading = false;
+
+	const signOutClick = () => {
+		loading = true;
+		signOut();
+	};
+
+	const signInClick = () => {
+		loading = true;
+		signIn('keycloak');
+	};
 </script>
 
 <Seo title={$seo.title} description={$seo.description} />
@@ -149,15 +162,27 @@
 						</div>
 					</div>
 					<div class="items-center md:flex">
-						{#if loggedIn}
-							<button class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2">
+						{#if $page.data.session?.user}
+							<button
+								on:click|once={signOutClick}
+								class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2"
+								disabled={loading}>
 								<i class="fa-solid fa-lock-open" />
-								<span class="hidden md:inline">Logout</span>
+								<span class="hidden md:inline">
+									{#if loading}
+										{$LL.messages.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />
+									{:else}
+										{$LL.buttons.logOut()}
+									{/if}
+								</span>
 							</button>
 						{:else}
-							<button class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2">
+							<button
+								on:click|once={signInClick}
+								class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2"
+								disabled={loading}>
 								<i class="fa-solid fa-lock" />
-								<span class="hidden md:inline">Login</span>
+								<span class="hidden md:inline">{$LL.buttons.logIn()}</span>
 							</button>
 						{/if}
 					</div>

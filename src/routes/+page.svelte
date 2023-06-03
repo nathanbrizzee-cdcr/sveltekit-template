@@ -37,7 +37,7 @@
 					type="button"
 					on:click|once={function loginClick() {
 						loading = true;
-						signIn('google');
+						signIn('keycloak');
 					}}
 					class="btn-sm variant-ghost-surface w-full disabled:variant-soft-surface md:btn disabled:cursor-not-allowed disabled:opacity-5"
 					disabled={!enableButton}>
