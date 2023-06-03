@@ -18,6 +18,7 @@ erDiagram
 		String email  "nullable"
 		DateTime emailVerified  "nullable"
 		String image  "nullable"
+		String roles  "nullable"
 	}
 	UserSettings {
 		String id PK  "dbgenerated(gen_random_uuid())"
@@ -44,10 +45,13 @@ erDiagram
 		String refreshToken  "nullable"
 		String accessToken  "nullable"
 		Int expiresIn  "nullable"
+		Int refreshExpiresIn  "nullable"
 		String tokenType  "nullable"
 		String scope  "nullable"
+		Int notBeforePolicy  "nullable"
 		String idToken  "nullable"
 		String sessionState  "nullable"
+		DateTime createdAt  "now()"
 	}
 	Session {
 		String id PK  "dbgenerated(gen_random_uuid())"

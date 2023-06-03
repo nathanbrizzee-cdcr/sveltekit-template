@@ -23,14 +23,14 @@
 		<button
 			on:click|once={function loginClick() {
 				loading = true;
-				signIn('google');
+				signIn('keycloak');
 			}}
 			disabled={loading}
 			class="btn variant-filled-primary cursor-pointer">
 			{#if loading}
 				{$LL.messages.pleaseWait()} <ProgressRadial class="ml-2 h-6 w-6" stroke={100} />
 			{:else}
-				Log in with Youtube
+				{$LL.buttons.logIn()}
 			{/if}
 		</button>
 	{/if}

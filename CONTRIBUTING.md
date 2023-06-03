@@ -104,8 +104,9 @@ npx playwright install
 
 ```bash
 AUTH_SECRET=your_secret
-GOOGLE_CLIENT_ID=your_client_id
-GOOGLE_CLIENT_SECRET=your_client_secret
+KEYCLOAK_CLIENT_ID=insert-your-client-id-here
+KEYCLOAK_CLIENT_SECRET=insert-your-client-secret-here
+KEYCLOAK_ISSUER=insert-your-issuer-here
 ```
 
 ### Run the project

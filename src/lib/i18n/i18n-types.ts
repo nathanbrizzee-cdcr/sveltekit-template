@@ -57,7 +57,7 @@ type RootTranslation = {
 		 */
 		logOut: string
 		/**
-		 * S​i​g​n​ ​i​n
+		 * L​o​g​ ​i​n
 		 */
 		logIn: string
 	}
@@ -205,7 +205,7 @@ export type TranslationFunctions = {
 		 */
 		logOut: () => LocalizedString
 		/**
-		 * Sign in
+		 * Log in
 		 */
 		logIn: () => LocalizedString
 	}
