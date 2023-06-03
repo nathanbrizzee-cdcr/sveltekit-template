@@ -1,113 +1,217 @@
 <script lang="ts">
 	// The ordering of these imports is critical to your app working properly
-	// https://www.skeleton.dev/docs/get-started#themes
-	import '@skeletonlabs/skeleton/themes/theme-hamlindigo.css';
-	// Your custom Skeleton theme.  If you use a built in, comment this out and use the above theme
-	// import '../theme.postcss';
+	// import '@skeletonlabs/skeleton/themes/theme-modern.css';
+	import '../theme.postcss';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
-	// import '@skeletonlabs/skeleton/styles/all.css';
+	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
-	import { setLocale, LL } from '$lib/i18n/i18n-svelte';
-	// import { page } from '$app/stores';
-	import { seo } from '$lib/stores/SeoStore';
+	import '@fortawesome/fontawesome-free/js/all.js';
+
+	/// Structure
+	// import Header from '$lib/Layout/Header.svelte';
+	import Footer from '$lib/Layout/Footer.svelte';
+	// import RightAside from '$lib/Layout/RightAside.svelte';
+	// import LeftAside from '$lib/Layout/LeftAside.svelte';
+	// import { onMount } from 'svelte';
+
+	// Skeleton Stuff
 	import {
-		AppBar,
 		AppShell,
+		AppBar,
 		Drawer,
 		drawerStore,
 		storePopup,
 		type DrawerSettings,
+		type PopupSettings,
+		popup,
 	} from '@skeletonlabs/skeleton';
+
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import LeftNavigation from '$/lib/Navigation/LeftNavigation.svelte';
-	import TopNavigation from '$lib/Navigation/TopNavigation.svelte';
-	import NavTrail from '$/lib/Navigation/NavTrail.svelte';
-	// import { onDestroy } from 'svelte';
+	import { setLocale, LL } from '$lib/i18n/i18n-svelte';
+	// import { page } from '$app/stores';
+	import { seo } from '$lib/stores/SeoStore';
 	import Seo from './SEO.svelte';
 
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+	//
+	// Begin App Code
+	//
 
 	export let data;
 
-	// let rightDrawerSettings: DrawerSettings = { id: 'right-drawer' };
-	// function drawerRightOpen(): void {
-	// 	drawerStore.open(rightDrawerSettings);
-	// }
+	storePopup.set({
+		computePosition,
+		autoUpdate,
+		offset,
+		shift,
+		flip,
+		arrow,
+	});
 
-	const leftDrawerSettings: DrawerSettings = { id: 'left-drawer' };
-	function drawerLeftOpen(): void {
-		drawerStore.open(leftDrawerSettings);
-	}
+	export let isLoading = false;
 
-	// let rightDrawerState: DrawerSettings = rightDrawerSettings;
-	// let leftDrawerState: DrawerSettings = leftDrawerSettings;
-	// const unsubscribe = drawerStore.subscribe((value) => {
-	// 	// if (value.id === 'right-drawer') {
-	// 	// 	rightDrawerState = value;
-	// 	// }
-	// 	// if (value.id === 'left-drawer') {
-	// 	// 	leftDrawerState = value;
-	// 	// }
-	// });
+	/*      ///////////////  Drawers \\\\\\\\\\\\\\\\     */
+	// Drawer Settings
+	const drawerSettingsLeft: DrawerSettings = {
+		id: 'left',
+		position: 'left',
+		width: 'w-1/2 lg:w-1/4',
+		bgDrawer: 'bg-white dark:bg-surface-50-900-token',
+		bgBackdrop: 'backdrop-opacity-85',
+		blur: 'backdrop-blur-md',
+	};
 
-	function drawerClose(): void {
-		drawerStore.close();
-	}
+	const drawerSettingsRight: DrawerSettings = {
+		id: 'right',
+		position: 'right',
+		width: 'w-1/2 lg:w-1/4',
+		bgDrawer: 'bg-white dark:bg-surface-50-900-token',
+		bgBackdrop: 'backdrop-opacity-85',
+		blur: 'backdrop-blur-md',
+	};
+
+	// FIXME:  This is causing a 'void is not assignable to type mouseeventhandler' error when trying to add parameter
+	const toggleDrawer = (drawer: DrawerSettings) => drawerStore.open(drawer);
+
+	// TODO: Consolidate these into one function with drawer parameter
+	const toggleRightDrawer = () => toggleDrawer(drawerSettingsRight);
+	const toggleLeftDrawer = () => toggleDrawer(drawerSettingsLeft);
 
 	setLocale(data.locale);
 	// onDestroy(unsubscribe);
+
+	const appmenuPopup: PopupSettings = {
+		// Represents the type of event that opens/closed the popup
+		event: 'click',
+		// Matches the data-popup value on your popup element
+		target: 'appmenuPopup',
+		// Defines which side of your trigger the popup will appear
+		placement: 'bottom',
+	};
+
+	export const loggedIn = 'false';
 </script>
 
 <Seo title={$seo.title} description={$seo.description} />
 
-<Drawer>
-	{#if $drawerStore.id === 'left-drawer'}
-		<div class="flex items-center">
-			<button class="btn btn-sm mr-4 lg:hidden" on:click={drawerClose}>
-				<span>
-					<iconify-icon icon="mdi:arrow-left-bold" width="32" height="32" />
-				</span>
-			</button>
-			<h2 class="p-4">{$LL.navigation.title()}</h2>
-		</div>
-		<hr />
-		<LeftNavigation />
-	{/if}
-</Drawer>
+<AppShell>
+	<div class="fixed left-0 top-0 h-full">
+		<button
+			class="btn-sm absolute left-0 top-1/3 flex h-14 w-2 items-center justify-center rounded border-b-2 border-r-2 border-t border-surface-300 border-t-slate-300 bg-white pl-4 shadow-lg dark:border-surface-400 dark:bg-surface-700"
+			on:click={toggleLeftDrawer}>
+			<i class="fa-solid fa-angles-right" />
+		</button>
+	</div>
 
-<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
+	<div class="fixed right-0 top-0 h-full">
+		<button
+			class="btn-sm absolute right-0 top-24 flex h-14 w-2 items-center justify-center rounded border-b-2 border-l-2 border-t border-surface-300 border-t-slate-300 bg-white pl-4 shadow-lg dark:border-surface-400 dark:bg-surface-700"
+			on:click={toggleRightDrawer}>
+			<i class="fa-solid fa-angles-left" />
+		</button>
+	</div>
 	<svelte:fragment slot="header">
-		<AppBar>
-			<svelte:fragment slot="lead">
+		<AppBar background="bg-white dark:bg-surface-50-900-token">
+			<svelte:fragment slot="lead"
+				><button type="button" class="p-2" on:click={toggleLeftDrawer}>
+					<i class="fa-solid fa-angles-right" />
+				</button>
 				<div class="flex items-center">
-					<button class="btn btn-sm mr-4 lg:hidden" on:click={drawerLeftOpen}>
-						<span>
-							<svg viewBox="0 0 100 80" class="h-4 w-4 fill-token">
-								<rect width="100" height="20" />
-								<rect y="30" width="100" height="20" />
-								<rect y="60" width="100" height="20" />
-							</svg>
-						</span>
-					</button>
-					<strong class="text-xl uppercase">{$LL.seo.title()}</strong>
+					<a href="/" class="flex items-center">
+						<img src="images/CDCR-seal.svg" alt="Logo" class="ml-4 inline h-12 w-12" />
+						<span class="ml-2 text-2xl font-bold" aria-label="Site Title">{$LL.seo.title()}</span>
+					</a>
 				</div>
 			</svelte:fragment>
+
 			<svelte:fragment slot="trail">
-				<TopNavigation />
-				<NavTrail />
+				<div class="flex items-center">
+					<div class="relative">
+						<button
+							class="md:variant-ringed-surface btn rounded px-4 py-2 md:mr-2"
+							use:popup={appmenuPopup}>
+							<i class="fa-solid fa-bars" />
+							<span class="hidden md:inline md:pl-1">Menu</span>
+							<i class="fa-solid fa-caret-down" />
+						</button>
+						<div
+							data-popup="appmenuPopup"
+							class="border border-gray-300 bg-white dark:bg-surface-50-900-token dark:border-surface-100-800-token">
+							<ul class="py-2">
+								<!-- TODO remove a11y comments -->
+								<!-- svelte-ignore a11y-invalid-attribute -->
+								<li><a href="#" class="block px-4 py-2">Home</a></li>
+								<!-- svelte-ignore a11y-invalid-attribute -->
+								<li><a href="#" class="block px-4 py-2">About</a></li>
+								<!-- svelte-ignore a11y-invalid-attribute -->
+								<li><a href="#" class="block px-4 py-2">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="items-center md:flex">
+						{#if loggedIn}
+							<button class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2">
+								<i class="fa-solid fa-lock-open" />
+								<span class="hidden md:inline">Logout</span>
+							</button>
+						{:else}
+							<button class="md:variant-ringed-surface btn flex items-center rounded px-4 py-2">
+								<i class="fa-solid fa-lock" />
+								<span class="hidden md:inline">Login</span>
+							</button>
+						{/if}
+					</div>
+					<button class="p-2 md:ml-4" on:click={toggleRightDrawer}>
+						<i class="fa-solid fa-angles-left" />
+					</button>
+				</div>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
-		<!-- <LeftNavigation /> -->
-	</svelte:fragment>
-	<!-- <svelte:fragment slot="sidebarRight">Sidebar Right goes here</svelte:fragment> -->
+	<!-- <svelte:fragment slot="sidebarLeft">bar left</svelte:fragment> -->
+	<!-- <svelte:fragment slot="sidebarRight">bar Right</svelte:fragment> -->
 	<!-- <svelte:fragment slot="pageHeader">Page Header</svelte:fragment> -->
-	<div class="w-full px-2 pt-2 md:px-4 lg:px-8">
-		<slot />
+	<!-- Router Slot -->
+	<div class="container">
+		{#if isLoading}
+			<span>Loading...</span>
+		{:else}
+			<slot />
+		{/if}
 	</div>
 	<!-- ---- / ---- -->
 	<!-- <svelte:fragment slot="pageFooter">Page Footer</svelte:fragment> -->
-	<!-- <svelte:fragment slot="footer">Footer</svelte:fragment> -->
+	<svelte:fragment slot="footer"><Footer /></svelte:fragment>
+
+	<Drawer id="right" />
+	<Drawer id="left" />
 </AppShell>
+
+<!-- <AppShell>
+	<AppBar>
+		<Header />
+	</AppBar>
+	<main id="main-content" class="container max-h-full max-w-full h-full mt-4">
+		<div class="flex flex-col lg:flex-row py-4 px-3">
+			<div class="lg:w-1/4 order-2 lg:order-1">
+				<LeftAside />
+			</div>
+			<div class="w-full h-full lg:w-3/4 order-1 lg:order-2 p-6">
+				{#if isLoading}
+					<span>Loading...</span>
+				{:else}
+					<slot />
+				{/if}
+			</div>
+			<div class="w-full lg:w-1/4 static order-3 lg:order-3">
+				<RightAside />
+			</div>
+		</div>
+	</main>
+
+	<Footer />
+	<Drawer id="right" />
+	<span class="z-999">
+		<Drawer id="left" />
+	</span>
+</AppShell> -->
