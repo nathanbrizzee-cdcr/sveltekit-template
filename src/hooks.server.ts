@@ -3,10 +3,11 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale } from '$lib/i18n/i18n-util.js';
 import { SvelteKitAuth } from '@auth/sveltekit';
-import Google from '@auth/core/providers/google';
+import Keycloak from '@auth/core/providers/keycloak';
 import PrismaAdapter from '$lib/prisma/client';
 import { config } from '$/lib/config.server';
 import prismaClient from '$/lib/db.server';
+import { logger } from '$lib/logger.server';
 
 const handleDetectLocale = (async ({ event, resolve }) => {
 	// TODO: get lang from cookie / user setting
@@ -21,22 +22,41 @@ const handleAuth = (async (...args) => {
 	const [{ event }] = args;
 	return SvelteKitAuth({
 		trustHost: true,
+		secret: config.AUTH_SECRET,
 		adapter: PrismaAdapter(prismaClient),
 		providers: [
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			Google({
-				clientId: config.GOOGLE_CLIENT_ID,
-				clientSecret: config.GOOGLE_CLIENT_SECRET,
+			Keycloak({
+				clientId: config.KEYCLOAK_CLIENT_ID,
+				clientSecret: config.KEYCLOAK_CLIENT_SECRET,
+				issuer: config.KEYCLOAK_ISSUER,
 			}),
 		],
+		logger: {
+			error(code, ...message) {
+				logger.error({ auth: { code, message } });
+			},
+			warn(code, ...message) {
+				logger.warn({ auth: { code, message } });
+			},
+			debug(code, ...message) {
+				logger.trace({ auth: { code, message } });
+			},
+		},
 		callbacks: {
+			// async signIn({ user, account, profile, email, credentials }) {
+			// 	// Called when user logs in
+			// 	// Return true if OK to sign in, or False if not OK
+			// 	return true;
+			// },
 			async session({ session, user }) {
 				session.user = {
 					id: user.id,
 					name: user.name,
 					email: user.email,
 					image: user.image,
+					roles: user.roles,
 					settings: user.settings,
 				};
 				event.locals.session = session;
@@ -44,6 +64,10 @@ const handleAuth = (async (...args) => {
 			},
 		},
 		events: {
+			async linkAccount(message) {
+				// Only called on account creation
+				logger.debug({ linkAccount: message });
+			},
 			async createUser(message) {
 				const locale = await prismaClient.locale.findFirst({
 					where: {
@@ -69,6 +93,7 @@ const protectedHandle = (async ({ event, resolve }) => {
 	if (!event.locals.session && event.route.id?.includes('(protected)')) {
 		throw redirect(302, '/');
 	}
+	// logger.debug({ session: event.locals.session });
 	return resolve(event);
 }) satisfies Handle;
 

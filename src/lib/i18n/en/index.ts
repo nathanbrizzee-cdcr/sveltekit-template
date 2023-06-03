@@ -14,7 +14,7 @@ const en: BaseTranslation = {
 	buttons: {
 		create: 'Create',
 		logOut: 'Logout',
-		logIn: 'Sign in',
+		logIn: 'Log in',
 	},
 	labels: {
 		title: 'Title',

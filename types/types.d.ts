@@ -8,11 +8,13 @@ declare module '@auth/sveltekit/node_modules/@auth/core/types' {
 	interface Session extends OGSession {
 		user?: {
 			id: string;
+			roles: string;
 			settings: UserSettings;
 		} & DefaultSession['user'];
 	}
 
 	interface User extends OGUser {
+		roles: string;
 		settings: UserSettings;
 	}
 }

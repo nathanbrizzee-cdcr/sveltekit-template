@@ -18,10 +18,17 @@ export interface CustomAdapter extends OGAdapter {
 		user: User & { settings: UserSettings | null };
 	} | null>;
 }
-
 export default function CustomPrismaAdapter(client: PrismaClient): CustomAdapter {
+	const myPrismaAdapter = PrismaAdapter(client);
 	return {
-		...PrismaAdapter(client),
+		...myPrismaAdapter,
+		linkAccount(account: AdapterAccount) {
+			// Keycloak sends a non-standard JSON token so we have to transform it into something NextAuth/Prisma can deal with.
+			// https://github.com/nextauthjs/next-auth/issues/3823
+			account.not_before_policy = account['not-before-policy'];
+			delete account['not-before-policy'];
+			return myPrismaAdapter.linkAccount(account);
+		},
 		async getUser(id: string) {
 			return client.user.findUnique({
 				where: { id },

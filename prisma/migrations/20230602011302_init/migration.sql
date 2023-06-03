@@ -13,6 +13,7 @@ CREATE TABLE "User" (
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
+    "roles" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -49,10 +50,13 @@ CREATE TABLE "Account" (
     "refreshToken" TEXT,
     "accessToken" TEXT,
     "expiresIn" INTEGER,
+    "refreshExpiresIn" INTEGER,
     "tokenType" TEXT,
     "scope" TEXT,
+    "notBeforePolicy" INTEGER,
     "idToken" TEXT,
     "sessionState" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
