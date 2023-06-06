@@ -1,4 +1,9 @@
-import type { Session as OGSession, DefaultSession, User as OGUser } from '@auth/core/types';
+import type {
+	Session as OGSession,
+	DefaultSession,
+	User as OGUser,
+	Account as OGAccount,
+} from '@auth/core/types';
 import type { UserSettings } from '@prisma/client';
 import { SvelteKitAuthConfig as OGSvelteKitAuthConfig } from '@auth/sveltekit';
 import type { CustomAdapter } from '$lib/prisma/client';
@@ -12,10 +17,14 @@ declare module '@auth/sveltekit/node_modules/@auth/core/types' {
 			settings: UserSettings;
 		} & DefaultSession['user'];
 	}
-
 	interface User extends OGUser {
 		roles: string;
 		settings: UserSettings;
+	}
+	interface Account extends OGAccount {
+		realm_access: {
+			roles: string;
+		};
 	}
 }
 

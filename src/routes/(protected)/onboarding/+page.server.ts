@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect } from '@sveltejs/kit';
 import prismaClient from '../../../lib/db.server';
 
 export const actions = {
-	default: async (event) => {
+	default: async (event: any) => {
 		if (!event.locals.session?.user) {
 			throw redirect(302, '/');
 		}

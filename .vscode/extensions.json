@@ -6,6 +6,8 @@
 		"bradlc.vscode-tailwindcss",
 		"Prisma.prisma",
 		"JakobKruse.svelte-kit-snippets",
-		"RafaelMartinez.svelte-preview"
+		"RafaelMartinez.svelte-preview",
+		"GitHub.vscode-pull-request-github",
+		"yoavbls.pretty-ts-errors"
 	]
 }
