@@ -8,6 +8,7 @@ import PrismaAdapter from '$lib/prisma/client';
 import { config } from '$/lib/config.server';
 import prismaClient from '$/lib/db.server';
 import { logger } from '$lib/logger.server';
+import jwt_decode from 'jwt-decode';
 
 const handleDetectLocale = (async ({ event, resolve }) => {
 	// TODO: get lang from cookie / user setting
@@ -44,12 +45,45 @@ const handleAuth = (async (...args) => {
 				logger.trace({ auth: { code, message } });
 			},
 		},
+		// https://authjs.dev/guides/basics/callbacks
 		callbacks: {
-			// async signIn({ user, account, profile, email, credentials }) {
-			// 	// Called when user logs in
-			// 	// Return true if OK to sign in, or False if not OK
-			// 	return true;
-			// },
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			async signIn({ user, account, profile, email, credentials }) {
+				/**
+				 * signIn is called every time the user signs in
+				 * See if there is an access token from the identity provider
+				 * If so, decode it and extract out the roles and add them
+				 * to the user record.
+				 */
+				if (account && account.access_token) {
+					// logger.debug({ token: account.access_token });
+					try {
+						const decodedToken: App.KeycloakAccessToken = jwt_decode(
+							account.access_token
+						) as App.KeycloakAccessToken;
+						if (decodedToken && decodedToken.realm_access) {
+							// console.log(decodedToken);
+							const { roles } = decodedToken.realm_access;
+							// console.log(roles);
+							if (roles && Array.isArray(roles)) {
+								const strRoles = roles.join(';');
+								logger.debug({ userRoles: strRoles });
+								await prismaClient.user.update({
+									where: {
+										id: user.id,
+									},
+									data: {
+										roles: strRoles,
+									},
+								});
+							}
+						}
+					} catch (e) {
+						logger.error(e);
+					}
+				}
+				return true;
+			},
 			async session({ session, user }) {
 				session.user = {
 					id: user.id,
@@ -60,14 +94,16 @@ const handleAuth = (async (...args) => {
 					settings: user.settings,
 				};
 				event.locals.session = session;
+				logger.debug({ session });
 				return session;
 			},
 		},
+		// https://authjs.dev/guides/basics/events
 		events: {
-			async linkAccount(message) {
-				// Only called on account creation
-				logger.debug({ linkAccount: message });
-			},
+			// async linkAccount(message) {
+			// 	// Only called on account creation
+			// 	logger.debug({ linkAccount: message });
+			// },
 			async createUser(message) {
 				const locale = await prismaClient.locale.findFirst({
 					where: {
