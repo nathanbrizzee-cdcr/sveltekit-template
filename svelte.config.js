@@ -19,6 +19,9 @@ const config = {
 	kit: {
 		// eslint-disable-next-line no-extra-boolean-cast
 		adapter: !!process.env.NODE_BUILD ? nodeAdapter() : adapter(),
+		paths: {
+			base: '/appbase',
+		},
 	},
 };
 

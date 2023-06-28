@@ -3,6 +3,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 
 	let loading = false;
 
@@ -31,7 +32,7 @@
 	</button>
 {:else}
 	<button class="hover:variant-soft-primary btn">
-		<a href="/"
+		<a href="{base}/"
 			><span class="w-6 text-center"><iconify-icon icon="fa:sign-in" /></span>
 			<span>{$LL.buttons.logIn()}</span></a>
 	</button>

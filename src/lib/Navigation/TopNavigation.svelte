@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import 'iconify-icon';
+	import { base } from '$app/paths';
 
 	const topNavigation: PopupSettings = {
 		event: 'click',
@@ -21,12 +22,12 @@
 	<nav class="list-nav">
 		<ul>
 			<li>
-				<a href="/"
+				<a href="{base}/"
 					><span class="w-6 text-center"><iconify-icon icon="fa:home" /></span>
 					<span>Homepage</span></a>
 			</li>
 			<li>
-				<a href="/about"
+				<a href="{base}/about"
 					><span class="w-6 text-center"><iconify-icon icon="fa:question-circle-o" /></span>
 					<span>About</span></a>
 			</li>

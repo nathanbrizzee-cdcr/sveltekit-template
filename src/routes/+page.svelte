@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import { seo } from '$lib/stores/SeoStore';
+	import { base } from '$app/paths';
 
 	const loginLL = $LL.pages.root.login;
 
@@ -19,7 +20,7 @@
 <div class="fixed left-0 top-48 flex w-full items-center justify-center">
 	{#if $page.data.session}
 		<p class="my-4 text-center">Nothing to see here</p>
-		<a href="/create" class="btn variant-filled-secondary" data-sveltekit-preload-data="hover"
+		<a href="{base}/create" class="btn variant-filled-secondary" data-sveltekit-preload-data="hover"
 			>{$LL.buttons.create()}</a>
 	{:else}
 		<div class="relative w-1/2">
@@ -63,7 +64,7 @@
 <!-- <div class="hero-container mx-auto flex max-w-sm flex-col items-center justify-center p-4">
 	{#if $page.data.session}
 		<p class="my-4 text-center">Nothing to see here</p>
-		<a href="/create" class="btn variant-filled-secondary" data-sveltekit-preload-data="hover"
+		<a href="{base}/create" class="btn variant-filled-secondary" data-sveltekit-preload-data="hover"
 			>{$LL.buttons.create()}</a>
 	{:else}
 		<p class="my-4 text-center">{$LL.pages.root.messages.tagline()}</p>

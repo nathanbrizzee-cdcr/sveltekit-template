@@ -34,6 +34,7 @@
 	// import { page } from '$app/stores';
 	import { seo } from '$lib/stores/SeoStore';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import Seo from './SEO.svelte';
 
 	//
@@ -130,7 +131,7 @@
 					<i class="fa-solid fa-angles-right" />
 				</button>
 				<div class="flex items-center">
-					<a href="/" class="flex items-center">
+					<a href="{base}/" class="flex items-center">
 						<img src="images/CDCR-seal.svg" alt="Logo" class="ml-4 inline h-12 w-12" />
 						<span class="ml-2 text-2xl font-bold" aria-label="Site Title">{$LL.seo.title()}</span>
 					</a>
